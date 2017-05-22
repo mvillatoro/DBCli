@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/DBCli.dir/main.cpp.o CMakeFiles/DBCli.dir/DbConsole.cpp.o  -o DBCli 

@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mario/CLionProjects/DBCli/DbConsole.cpp
+DbConsole.h
+/home/mario/CLionProjects/DBCli/DbConsole.h
+
+/home/mario/CLionProjects/DBCli/DbConsole.h
+algorithm
+-
+iostream
+-
+iterator
+-
+sstream
+-
+cstring
+-
+fstream
+-
+sstream
+-
+string
+-
+vector
+-
+
+/home/mario/CLionProjects/DBCli/main.cpp
+iostream
+-
+DbConsole.h
+/home/mario/CLionProjects/DBCli/DbConsole.h
+

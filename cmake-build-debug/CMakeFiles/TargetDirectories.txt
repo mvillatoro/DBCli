@@ -1,0 +1,3 @@
+/home/mario/CLionProjects/DBCli/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/mario/CLionProjects/DBCli/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/mario/CLionProjects/DBCli/cmake-build-debug/CMakeFiles/DBCli.dir
