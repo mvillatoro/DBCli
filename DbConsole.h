@@ -22,13 +22,14 @@ class DbConsole {
 public:
 
     ofstream dbFile;
-    string DbName;
+    string DbName = "*";
 
     DbConsole();
     void executeCli();
+    void disconnectFromDatabase();
+    void readFromDatabase();
     void openDatabaseFile(string dbName);
     void createDatabase(string dbName, int dbSize);
-    void disconnectFromDatabase();
     void createTable(string tableName, string command);
     void splitCommand(string commandString, const string& delim, vector<string>& tokens);
     bool compareTokenStrings(string command, vector<string> tokens);

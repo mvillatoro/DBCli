@@ -32,6 +32,11 @@ void DbConsole::executeCli() {
         cout<<"~$ ";
         cin.getline(command, sizeof(command));
 
+
+//        string var = "create table client(id int, name char.6000, money double)";
+//        string var = "create table client(id int, money double)";
+//        strcpy(command, var.c_str());
+
         vector<string> parameters;
         splitCommand(command, " ", parameters);
 
@@ -39,7 +44,7 @@ void DbConsole::executeCli() {
             executionState = false;
         }else if(compareTokenStrings("create", parameters)){
 
-            int fileSize = 300;
+            int fileSize = 3;
 
             if(compareTokenStrings("-z", parameters))
                 fileSize = stoi(parameters[4]);
@@ -76,8 +81,11 @@ void DbConsole::executeCli() {
             cout << "drop database [database name]" << endl;
             cout << "connect to [database name]" << endl;
             cout << "disconnect" << endl;
-        }else if(compareTokenStrings("disconnect", parameters)){
+        }else if(compareTokenStrings("disconnect", parameters)) {
             disconnectFromDatabase();
+        }else if(compareTokenStrings("read", parameters)){
+
+            readFromDatabase();
         }else{
             cout << "Command not recognized..." << endl;
         }
@@ -121,28 +129,24 @@ void DbConsole::openDatabaseFile(string dbName) {
 
     dbName += ".dbc";
 
-    if(dbName != DbName){
-        if(dbFile.is_open()){
+    if(DbName == "*"){
 
-            cout << "First disconnect from database." << endl;
+        ifstream my_file(dbName);
 
-//            cout<< "Disconnecting from " + DbName << endl;
-//            dbFile.close();
-//            dbFile.open ( dbName, ios::out | ios::app | ios::binary);
-//            DbName = dbName;
-//
-//            if(dbFile.is_open())
-//                cout << "Connection successful!" << endl;
-
+        if (!my_file)
+        {
+            cout << "Database does not exists" << endl;
         }else{
             dbFile.open ( dbName, ios::out | ios::app | ios::binary);
             DbName = dbName;
 
-            if(dbFile.is_open())
+            if(dbFile.is_open()){
                 cout << "Connection successful!" << endl;
+                dbFile.close();
+            }
         }
     }else
-        cout<< "Already connected to " + dbName <<endl;
+        cout << "First disconnect from database." << endl;
 
 }
 
@@ -176,8 +180,6 @@ void DbConsole::createTable(string tableName, string command) {
                 text.erase(it);
         }
         *i = text;
-
-//        cout << *i << endl;
     }
 
     for (auto i = tableParameter.begin(); i != tableParameter.end(); ++i){
@@ -185,18 +187,35 @@ void DbConsole::createTable(string tableName, string command) {
 
         splitCommand(*i, " ", tableColumns);
 
-        /*
-         * int(4)
-         * double(8)
-         * char(n)<4000;
-         */
+
+        string varchar = *i;
+
+        vector<string> charSplit;
+        size_t found = varchar.find("char");
+        if (found!=string::npos){
+            //cout << varchar << endl;
+            splitCommand(varchar, ".", charSplit);
+
+            int charSize = stoi(charSplit[1]);
+
+            if(charSize > 4000){
+                cout<< "Char size overflow." << endl;
+                return;
+            }
+
+            tableCommand += "|" + tableColumns[0] + "," + tableColumns[1];
+        }
+
 
         if(compareTokenStrings("int", tableColumns))
             tableCommand += "|" + tableColumns[0] + "," + "int";
         else if(compareTokenStrings("double", tableColumns))
             tableCommand += "|" + tableColumns[0] + "," + "double";
-        else if(compareTokenStrings("char", tableColumns))
-            tableCommand += "|" + tableColumns[0] + "," + "char";
+        else if(compareTokenStrings("char", tableColumns)){
+            tableCommand += "|" + tableColumns[0] + "," + tableColumns[1];
+            //tableCommand += "|" + tableColumns[0] + "," + "char";
+
+        }
 
     }
 
@@ -204,19 +223,46 @@ void DbConsole::createTable(string tableName, string command) {
 
     cout << tableCommand << endl;
 
-//  [tableName:|column,dataType|column,dataType|column,dataType]
+    if(DbName == "*"){
+        cout << "No database found." << endl;
+    }else{
+        dbFile.open ( DbName, ios::out | ios::app | ios::binary);
 
-    if (dbFile.is_open())
-    {
-        dbFile << tableCommand;
-        dbFile.close();
+        if (dbFile.is_open())
+        {
+            dbFile << tableCommand;
+            dbFile.close();
+        }
+        else cout << "Unable to open file" << endl;
     }
-    else cout << "Unable to open file" << endl;
+
 }
 
 void DbConsole::disconnectFromDatabase() {
-    dbFile.close();
 
+    DbName = "*";
+    dbFile.close();
     cout << "Connection closed." << endl;
 
+}
+
+void DbConsole::readFromDatabase() {
+
+    if(DbName == "*"){
+        cout << "No database found." << endl;
+    }else{
+        string line;
+        ifstream myDatabase(DbName);
+
+        if(myDatabase.is_open()){
+            while (getline(myDatabase,line )){
+                cout << line <<endl;
+            }
+
+            myDatabase.close();
+        }else{
+            cout << "Unable to access database" << endl;
+        }
+
+    }
 }
