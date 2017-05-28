@@ -12,6 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47346f6d-1d14-4874-9243-a33dc639c501" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/DBCli" afterPath="$PROJECT_DIR$/cmake-build-debug/DBCli" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DbConsole.cpp" afterPath="$PROJECT_DIR$/DbConsole.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DbConsole.h" afterPath="$PROJECT_DIR$/DbConsole.h" />
@@ -33,11 +34,19 @@
       <file leaf-file-name="DbConsole.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DbConsole.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-320">
-              <caret line="33" column="0" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+            <state relative-caret-position="400">
+              <caret line="286" column="41" lean-forward="false" selection-start-line="286" selection-start-column="41" selection-end-line="286" selection-end-column="41" />
               <folding>
+                <element signature="e#63#107#0" expanded="false" />
                 <element signature="e#109#605#0" expanded="false" />
-                <element signature="e#6438#6564#0" expanded="false" />
+                <element signature="e#607#2817#0" expanded="false" />
+                <element signature="e#2819#3140#0" expanded="false" />
+                <element signature="e#3142#4326#0" expanded="false" />
+                <element signature="e#4328#4886#0" expanded="false" />
+                <element signature="e#4888#7451#0" expanded="false" />
+                <element signature="e#7453#7557#0" expanded="false" />
+                <element signature="e#7559#7991#0" expanded="false" />
+                <element signature="e#7993#8601#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -46,8 +55,8 @@
       <file leaf-file-name="DbConsole.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DbConsole.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="24" column="22" lean-forward="false" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+            <state relative-caret-position="144">
+              <caret line="23" column="6" lean-forward="false" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -67,8 +76,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/DbConsole.cpp" />
         <option value="$PROJECT_DIR$/DbConsole.h" />
+        <option value="$PROJECT_DIR$/DbConsole.cpp" />
       </list>
     </option>
   </component>
@@ -338,26 +347,37 @@
       <updated>1495572587420</updated>
       <workItem from="1495936171219" duration="8730000" />
       <workItem from="1495952820401" duration="142000" />
-      <workItem from="1495953550321" duration="4835000" />
+      <workItem from="1495953550321" duration="20907000" />
+      <workItem from="1496002634334" duration="3802000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13707000" />
+    <option name="totallyTimeSpent" value="33581000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11442786" sideWeight="0.49455675" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32776618" sideWeight="0.49806523" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881" sideWeight="0.5041459" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34133613" sideWeight="0.49585405" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34133613" sideWeight="0.49585405" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11553344" sideWeight="0.49455675" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925585" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.112216696" sideWeight="0.5054432" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -366,7 +386,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -377,7 +396,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -386,8 +407,43 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="e#63#107#0" expanded="false" />
             <element signature="e#109#605#0" expanded="false" />
-            <element signature="e#6438#6564#0" expanded="false" />
+            <element signature="e#607#2817#0" expanded="false" />
+            <element signature="e#2819#3140#0" expanded="false" />
+            <element signature="e#3142#4326#0" expanded="false" />
+            <element signature="e#4328#4886#0" expanded="false" />
+            <element signature="e#4888#7451#0" expanded="false" />
+            <element signature="e#7453#7557#0" expanded="false" />
+            <element signature="e#7559#7991#0" expanded="false" />
+            <element signature="e#7993#8601#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DbConsole.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="28" column="14" lean-forward="false" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DbConsole.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#63#107#0" expanded="false" />
+            <element signature="e#109#605#0" expanded="false" />
+            <element signature="e#607#2817#0" expanded="false" />
+            <element signature="e#2819#3140#0" expanded="false" />
+            <element signature="e#3142#4326#0" expanded="false" />
+            <element signature="e#4328#4886#0" expanded="false" />
+            <element signature="e#4888#7451#0" expanded="false" />
+            <element signature="e#7453#7557#0" expanded="false" />
+            <element signature="e#7559#7991#0" expanded="false" />
+            <element signature="e#7993#8601#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -405,27 +461,43 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="e#63#107#0" expanded="false" />
             <element signature="e#109#605#0" expanded="false" />
-            <element signature="e#6438#6564#0" expanded="false" />
+            <element signature="e#607#2817#0" expanded="false" />
+            <element signature="e#2819#3140#0" expanded="false" />
+            <element signature="e#3142#4326#0" expanded="false" />
+            <element signature="e#4328#4886#0" expanded="false" />
+            <element signature="e#4888#7451#0" expanded="false" />
+            <element signature="e#7453#7557#0" expanded="false" />
+            <element signature="e#7559#7991#0" expanded="false" />
+            <element signature="e#7993#8601#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DbConsole.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="24" column="22" lean-forward="false" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+        <state relative-caret-position="144">
+          <caret line="23" column="6" lean-forward="false" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DbConsole.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-320">
-          <caret line="33" column="0" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+        <state relative-caret-position="400">
+          <caret line="286" column="41" lean-forward="false" selection-start-line="286" selection-start-column="41" selection-end-line="286" selection-end-column="41" />
           <folding>
+            <element signature="e#63#107#0" expanded="false" />
             <element signature="e#109#605#0" expanded="false" />
-            <element signature="e#6438#6564#0" expanded="false" />
+            <element signature="e#607#2817#0" expanded="false" />
+            <element signature="e#2819#3140#0" expanded="false" />
+            <element signature="e#3142#4326#0" expanded="false" />
+            <element signature="e#4328#4886#0" expanded="false" />
+            <element signature="e#4888#7451#0" expanded="false" />
+            <element signature="e#7453#7557#0" expanded="false" />
+            <element signature="e#7559#7991#0" expanded="false" />
+            <element signature="e#7993#8601#0" expanded="false" />
           </folding>
         </state>
       </provider>

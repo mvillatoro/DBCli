@@ -21,13 +21,15 @@ using namespace std;
 class DbConsole {
 public:
 
-    ofstream dbFile;
+    //ofstream dbFile;
     string DbName = "*";
+    char * memoryBlock = new char[512];
 
     DbConsole();
+    void getBitmap();
     void executeCli();
-    void disconnectFromDatabase();
     void readFromDatabase();
+    void disconnectFromDatabase();
     void openDatabaseFile(string dbName);
     void createDatabase(string dbName, int dbSize);
     void createTable(string tableName, string command);
