@@ -25,7 +25,7 @@ void DbConsole::splitCommand(string commandString,  const string& splitter, vect
 
 void DbConsole::executeCli() {
 
-    char command[30];
+    char command[100];
     bool executionState = true;
 
     do{
@@ -50,9 +50,23 @@ void DbConsole::executeCli() {
             if(compareTokenStrings("table", parameters))
                 createTable(parameters[2], command);
 
-        }
-        else if(compareTokenStrings("connect", parameters)){
+        }else if(compareTokenStrings("connect", parameters)){
             openDatabaseFile(parameters[2]);
+        }else if(compareTokenStrings("drop", parameters)) {
+
+            if (compareTokenStrings("database", parameters)) {
+                string dbName = parameters[2] + ".dbc";
+
+                if (remove(dbName.c_str()) != 0)
+                    perror("Database does not exists.");
+                else
+                    puts("Database successfully dropped");
+            }
+        }else if(compareTokenStrings("help", parameters)){
+            cout<< "create database [database name]" <<endl;
+            cout<< "drop database [database name]" <<endl;
+            cout<< "connect to [database name]" <<endl;
+
         }else{
             cout << "Command not recognized..." << endl;
         }
@@ -105,18 +119,68 @@ void DbConsole::openDatabaseFile(string dbName) {
 
 void DbConsole::createTable(string tableName, string command) {
 
+    string tableCommand = "[" + tableName + ":";
+
+    string newCommand = command.substr(0, command.size()-1);
+
     vector<string> tableParameters;
 
-    splitCommand(command, "(", tableParameters);
+    splitCommand(newCommand, "(", tableParameters);
 
+    tableParameters[0] = "";
 
+    std::stringstream joinedValues;
+    for (auto value: tableParameters)
+            joinedValues << value;
 
+    vector<string> tableParameter;
 
-    if (dbFile.is_open())
-    {
-        dbFile << "";
+    splitCommand(joinedValues.str(), ",", tableParameter);
+
+    for (auto i = tableParameter.begin(); i != tableParameter.end(); ++i){
+
+        string text = *i;
+
+        if(text.at(0) == ' '){
+            auto it = std::find(text.begin(), text.end(), ' ');
+            if (it != text.end())
+                text.erase(it);
+        }
+        *i = text;
+
+//        cout << *i << endl;
     }
-    else cout << "Unable to open file";
+
+    for (auto i = tableParameter.begin(); i != tableParameter.end(); ++i){
+        vector<string> tableColumns;
+
+        splitCommand(*i, " ", tableColumns);
+
+        /*
+         * int(4)
+         * double(8)
+         * char(n)<4000;
+         */
+
+        if(compareTokenStrings("int", tableColumns))
+            tableCommand += "|" + tableColumns[0] + "," + "int";
+//        else if(compareTokenStrings("double", tableColumns))
+//            tableCommand += "|" + tableColumns[0] + "double";
+//        else if(compareTokenStrings("char", tableColumns))
+//            tableCommand += "|" + tableColumns[0] + "char";
+//
+    }
+
+    tableCommand += "]";
+
+    cout << tableCommand << endl;
+
+//  [tableName:column,dataType|column,dataType|column,dataType]
+//    if (dbFile.is_open())
+//    {
+//        dbFile << "";
+//    }
+//    else cout << "Unable to open file";
 }
 
 
