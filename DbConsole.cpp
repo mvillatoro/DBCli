@@ -47,8 +47,17 @@ void DbConsole::executeCli() {
             if(compareTokenStrings("database", parameters))
                 createDatabase(parameters[2], fileSize);
 
-            if(compareTokenStrings("table", parameters))
-                createTable(parameters[2], command);
+            if(compareTokenStrings("table", parameters)){
+
+                string newCommand = parameters[2];
+
+                vector<string> tableName;
+
+                splitCommand(newCommand, "(", tableName);
+
+
+                createTable(tableName[0], command);
+            }
 
         }else if(compareTokenStrings("connect", parameters)){
             openDatabaseFile(parameters[2]);
@@ -62,11 +71,13 @@ void DbConsole::executeCli() {
                 else
                     puts("Database successfully dropped");
             }
-        }else if(compareTokenStrings("help", parameters)){
-            cout<< "create database [database name]" <<endl;
-            cout<< "drop database [database name]" <<endl;
-            cout<< "connect to [database name]" <<endl;
-
+        }else if(compareTokenStrings("help", parameters)) {
+            cout << "create database [database name]" << endl;
+            cout << "drop database [database name]" << endl;
+            cout << "connect to [database name]" << endl;
+            cout << "disconnect" << endl;
+        }else if(compareTokenStrings("disconnect", parameters)){
+            disconnectFromDatabase();
         }else{
             cout << "Command not recognized..." << endl;
         }
@@ -90,9 +101,19 @@ bool DbConsole::compareTokenStrings(string command, vector<string> tokens) {
 
 void DbConsole::createDatabase(string dbName, int dbSize) {
 
-    std::ofstream ofs(dbName + ".dbc", std::ios::binary | std::ios::out);
-    ofs.seekp((dbSize<<20) - 1);
-    ofs.write("", 1);
+    string DbName = dbName + ".dbc";
+
+    ifstream my_file(DbName);
+    if (!my_file)
+    {
+        std::ofstream ofs(DbName, std::ios::binary | std::ios::out);
+        ofs.seekp((dbSize<<20) - 1);
+        ofs.write("", 1);
+
+        cout << "Database " + dbName + " created." << endl;
+    }else{
+        cout << "Database " + dbName + " already exists." << endl;
+    }
 
 }
 
@@ -103,17 +124,25 @@ void DbConsole::openDatabaseFile(string dbName) {
     if(dbName != DbName){
         if(dbFile.is_open()){
 
-            cout<< "Disconnecting from " + DbName << endl;
-            dbFile.close();
+            cout << "First disconnect from database." << endl;
+
+//            cout<< "Disconnecting from " + DbName << endl;
+//            dbFile.close();
+//            dbFile.open ( dbName, ios::out | ios::app | ios::binary);
+//            DbName = dbName;
+//
+//            if(dbFile.is_open())
+//                cout << "Connection successful!" << endl;
+
+        }else{
             dbFile.open ( dbName, ios::out | ios::app | ios::binary);
             DbName = dbName;
 
             if(dbFile.is_open())
                 cout << "Connection successful!" << endl;
-
         }
     }else
-        cout<< "Already connected to" + DbName <<endl;
+        cout<< "Already connected to " + dbName <<endl;
 
 }
 
@@ -131,7 +160,7 @@ void DbConsole::createTable(string tableName, string command) {
 
     std::stringstream joinedValues;
     for (auto value: tableParameters)
-            joinedValues << value;
+        joinedValues << value;
 
     vector<string> tableParameter;
 
@@ -164,32 +193,30 @@ void DbConsole::createTable(string tableName, string command) {
 
         if(compareTokenStrings("int", tableColumns))
             tableCommand += "|" + tableColumns[0] + "," + "int";
-//        else if(compareTokenStrings("double", tableColumns))
-//            tableCommand += "|" + tableColumns[0] + "double";
-//        else if(compareTokenStrings("char", tableColumns))
-//            tableCommand += "|" + tableColumns[0] + "char";
-//
+        else if(compareTokenStrings("double", tableColumns))
+            tableCommand += "|" + tableColumns[0] + "," + "double";
+        else if(compareTokenStrings("char", tableColumns))
+            tableCommand += "|" + tableColumns[0] + "," + "char";
+
     }
 
     tableCommand += "]";
 
     cout << tableCommand << endl;
 
-//  [tableName:column,dataType|column,dataType|column,dataType]
-//    if (dbFile.is_open())
-//    {
-//        dbFile << "";
-//    }
-//    else cout << "Unable to open file";
+//  [tableName:|column,dataType|column,dataType|column,dataType]
+
+    if (dbFile.is_open())
+    {
+        dbFile << tableCommand;
+        dbFile.close();
+    }
+    else cout << "Unable to open file" << endl;
 }
 
+void DbConsole::disconnectFromDatabase() {
+    dbFile.close();
 
-/*
- *
- * CREATE TABLE table_name (
-    column1 datatype,
-    column2 datatype,
-    column3 datatype,
-   ....
-);
- */
+    cout << "Connection closed." << endl;
+
+}

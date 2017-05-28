@@ -27,8 +27,9 @@ public:
     DbConsole();
     void executeCli();
     void openDatabaseFile(string dbName);
-    void createTable(string tableName, string command);
     void createDatabase(string dbName, int dbSize);
+    void disconnectFromDatabase();
+    void createTable(string tableName, string command);
     void splitCommand(string commandString, const string& delim, vector<string>& tokens);
     bool compareTokenStrings(string command, vector<string> tokens);
 
