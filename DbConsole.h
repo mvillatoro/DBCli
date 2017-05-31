@@ -36,7 +36,7 @@ public:
     void insertIntoTable(string tableName, vector<string> parameters);
     void splitCommand(string commandString, const string& delim, vector<string>& tokens);
     bool compareTokenStrings(string command, vector<string> tokens);
-    bool tableExists(string tableName);
+    string tableExists(string tableName);
 
 
 };

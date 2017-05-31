@@ -12,7 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47346f6d-1d14-4874-9243-a33dc639c501" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/DBCli" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DbConsole.cpp" afterPath="$PROJECT_DIR$/DbConsole.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DbConsole.h" afterPath="$PROJECT_DIR$/DbConsole.h" />
@@ -34,17 +33,17 @@
       <file leaf-file-name="DbConsole.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DbConsole.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="325" column="9" lean-forward="true" selection-start-line="325" selection-start-column="9" selection-end-line="325" selection-end-column="9" />
+            <state relative-caret-position="478">
+              <caret line="359" column="8" lean-forward="true" selection-start-line="359" selection-start-column="8" selection-end-line="359" selection-end-column="8" />
               <folding>
                 <element signature="e#63#107#0" expanded="false" />
                 <element signature="e#109#605#0" expanded="false" />
                 <element signature="e#607#2754#0" expanded="false" />
                 <element signature="e#2756#3077#0" expanded="false" />
+                <element signature="e#3079#4263#0" expanded="false" />
                 <element signature="e#4265#4823#0" expanded="false" />
-                <element signature="e#4825#7421#0" expanded="false" />
                 <element signature="e#7423#7527#0" expanded="false" />
-                <element signature="e#8636#9701#0" expanded="false" />
+                <element signature="e#9542#10608#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -53,8 +52,8 @@
       <file leaf-file-name="DbConsole.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DbConsole.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+            <state relative-caret-position="420">
+              <caret line="38" column="10" lean-forward="false" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -88,8 +87,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="64" />
     <option name="y" value="-11" />
-    <option name="width" value="1857" />
-    <option name="height" value="1092" />
+    <option name="width" value="1853" />
+    <option name="height" value="939" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -347,12 +346,13 @@
       <workItem from="1495952820401" duration="142000" />
       <workItem from="1495953550321" duration="20907000" />
       <workItem from="1496002634334" duration="4273000" />
-      <workItem from="1496209365320" duration="5028000" />
+      <workItem from="1496209365320" duration="5096000" />
+      <workItem from="1496263368991" duration="5395000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39080000" />
+    <option name="totallyTimeSpent" value="44543000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -364,16 +364,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-11" width="1857" height="1092" extended-state="7" />
+    <frame x="64" y="-11" width="1853" height="939" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.116639026" sideWeight="0.49455675" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11800554" sideWeight="0.49455675" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32776618" sideWeight="0.49806523" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881" sideWeight="0.5041459" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34133613" sideWeight="0.49585405" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.289441" sideWeight="0.49585405" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.112216696" sideWeight="0.5054432" order="2" side_tool="true" content_ui="tabs" />
@@ -403,6 +403,31 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/DbConsole.cpp">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#63#107#0" expanded="false" />
+            <element signature="e#109#605#0" expanded="false" />
+            <element signature="e#607#2754#0" expanded="false" />
+            <element signature="e#2756#3077#0" expanded="false" />
+            <element signature="e#3079#4263#0" expanded="false" />
+            <element signature="e#4265#4823#0" expanded="false" />
+            <element signature="e#7423#7527#0" expanded="false" />
+            <element signature="e#9542#10608#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DbConsole.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DbConsole.cpp">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5720">
           <caret line="286" column="41" lean-forward="false" selection-start-line="286" selection-start-column="41" selection-end-line="286" selection-end-column="41" />
           <folding>
@@ -410,10 +435,10 @@
             <element signature="e#109#605#0" expanded="false" />
             <element signature="e#607#2754#0" expanded="false" />
             <element signature="e#2756#3077#0" expanded="false" />
+            <element signature="e#3079#4263#0" expanded="false" />
             <element signature="e#4265#4823#0" expanded="false" />
-            <element signature="e#4825#7421#0" expanded="false" />
             <element signature="e#7423#7527#0" expanded="false" />
-            <element signature="e#8636#9701#0" expanded="false" />
+            <element signature="e#9542#10608#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -435,10 +460,10 @@
             <element signature="e#109#605#0" expanded="false" />
             <element signature="e#607#2754#0" expanded="false" />
             <element signature="e#2756#3077#0" expanded="false" />
+            <element signature="e#3079#4263#0" expanded="false" />
             <element signature="e#4265#4823#0" expanded="false" />
-            <element signature="e#4825#7421#0" expanded="false" />
             <element signature="e#7423#7527#0" expanded="false" />
-            <element signature="e#8636#9701#0" expanded="false" />
+            <element signature="e#9542#10608#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -460,10 +485,10 @@
             <element signature="e#109#605#0" expanded="false" />
             <element signature="e#607#2754#0" expanded="false" />
             <element signature="e#2756#3077#0" expanded="false" />
+            <element signature="e#3079#4263#0" expanded="false" />
             <element signature="e#4265#4823#0" expanded="false" />
-            <element signature="e#4825#7421#0" expanded="false" />
             <element signature="e#7423#7527#0" expanded="false" />
-            <element signature="e#8636#9701#0" expanded="false" />
+            <element signature="e#9542#10608#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -485,35 +510,35 @@
             <element signature="e#109#605#0" expanded="false" />
             <element signature="e#607#2754#0" expanded="false" />
             <element signature="e#2756#3077#0" expanded="false" />
+            <element signature="e#3079#4263#0" expanded="false" />
             <element signature="e#4265#4823#0" expanded="false" />
-            <element signature="e#4825#7421#0" expanded="false" />
             <element signature="e#7423#7527#0" expanded="false" />
-            <element signature="e#8636#9701#0" expanded="false" />
+            <element signature="e#9542#10608#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DbConsole.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+        <state relative-caret-position="420">
+          <caret line="38" column="10" lean-forward="false" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DbConsole.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="325" column="9" lean-forward="true" selection-start-line="325" selection-start-column="9" selection-end-line="325" selection-end-column="9" />
+        <state relative-caret-position="478">
+          <caret line="359" column="8" lean-forward="true" selection-start-line="359" selection-start-column="8" selection-end-line="359" selection-end-column="8" />
           <folding>
             <element signature="e#63#107#0" expanded="false" />
             <element signature="e#109#605#0" expanded="false" />
             <element signature="e#607#2754#0" expanded="false" />
             <element signature="e#2756#3077#0" expanded="false" />
+            <element signature="e#3079#4263#0" expanded="false" />
             <element signature="e#4265#4823#0" expanded="false" />
-            <element signature="e#4825#7421#0" expanded="false" />
             <element signature="e#7423#7527#0" expanded="false" />
-            <element signature="e#8636#9701#0" expanded="false" />
+            <element signature="e#9542#10608#0" expanded="false" />
           </folding>
         </state>
       </provider>

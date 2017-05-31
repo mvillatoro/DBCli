@@ -310,7 +310,9 @@ void DbConsole::insertIntoTable(string tableName, vector<string> parameters) {
         return;
     }
 
-    if(!tableExists(tableName)){
+    string tableHeader = tableExists(tableName);
+
+    if(tableHeader == "-1"){
         cout << "Table not found" << endl;
         return;
     }
@@ -325,15 +327,48 @@ void DbConsole::insertIntoTable(string tableName, vector<string> parameters) {
             break;
         }
     }
-    cout <<  cleanBitDiskAddress << endl;
+
+    int writePointer = (cleanBitDiskAddress * 512) + 4;
+
+    char * memblock;
+
+    ifstream file (DbName, ios::out|ios::binary);
+    if(file.is_open()){
+
+        uint32_t bitmapSize;
+        file.read(reinterpret_cast<char *>(&bitmapSize), sizeof(bitmapSize));
+        memblock = new char [512];
+        file.seekg(writePointer, ios::beg);
+        file.read(memblock, 512);
+        file.close();
+    }
+    else cout << "Unable to open file" << endl;
+
+    vector<string> tableColumns;
+
+    splitCommand(tableHeader, "|" , tableColumns);
+
+    for(vector<string>::const_iterator i = tableColumns.begin() +1; i != tableColumns.end(); ++i) {
+        string token = *i;
+
+        vector<string> columnData;
+        splitCommand(token, ",", columnData);
+
+        cout<< columnData[0] << endl;
+        cout<< columnData[1] << endl;
+
+        
+
+        cout<< "************" << endl;
+
+    }
 
 
-
-
+    delete[] memblock;
 
 }
 
-bool DbConsole::tableExists(string tableName) {
+string DbConsole::tableExists(string tableName) {
 
     char * memblock;
 
@@ -372,9 +407,9 @@ bool DbConsole::tableExists(string tableName) {
         {
             nuTableName = token.substr(0, pos);
             if (tableName == nuTableName)
-                return  true;
+                return token;
         }
     }
 
-    return false;
+    return "-1";
 }
