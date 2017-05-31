@@ -24,17 +24,20 @@ public:
     //ofstream dbFile;
     string DbName = "*";
     char * memoryBlock = new char[512];
+    int bitMapSize;
 
     DbConsole();
     void getBitmap();
     void executeCli();
-    void readFromDatabase();
     void disconnectFromDatabase();
     void openDatabaseFile(string dbName);
     void createDatabase(string dbName, int dbSize);
     void createTable(string tableName, string command);
+    void insertIntoTable(string tableName, vector<string> parameters);
     void splitCommand(string commandString, const string& delim, vector<string>& tokens);
     bool compareTokenStrings(string command, vector<string> tokens);
+    bool tableExists(string tableName);
+
 
 };
 

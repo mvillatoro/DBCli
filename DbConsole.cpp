@@ -31,12 +31,6 @@ void DbConsole::executeCli() {
     do{
         cout<<"~$ ";
         cin.getline(command, sizeof(command));
-
-
-//        string var = "create table client(id int, name char.6000, money double)";
-//        string var = "create table client(id int, money double)";
-//        strcpy(command, var.c_str());
-
         vector<string> parameters;
         splitCommand(command, " ", parameters);
 
@@ -53,21 +47,15 @@ void DbConsole::executeCli() {
                 createDatabase(parameters[2], fileSize);
 
             if(compareTokenStrings("table", parameters)){
-
                 string newCommand = parameters[2];
-
                 vector<string> tableName;
-
                 splitCommand(newCommand, "(", tableName);
-
-
                 createTable(tableName[0], command);
             }
 
         }else if(compareTokenStrings("connect", parameters)){
             openDatabaseFile(parameters[2]);
         }else if(compareTokenStrings("drop", parameters)) {
-
             if (compareTokenStrings("database", parameters)) {
                 string dbName = parameters[2] + ".dbc";
 
@@ -80,12 +68,13 @@ void DbConsole::executeCli() {
             cout << "create database [database name]" << endl;
             cout << "drop database [database name]" << endl;
             cout << "connect to [database name]" << endl;
+            cout << "insert into [tableName] ([column1], [column2]...): values([value1], [value2]...)" << endl;
             cout << "disconnect" << endl;
         }else if(compareTokenStrings("disconnect", parameters)) {
             disconnectFromDatabase();
-        }else if(compareTokenStrings("read", parameters)){
+        }else if(compareTokenStrings("insert", parameters)){
 
-            readFromDatabase();
+            insertIntoTable(parameters[2], parameters);
         }else{
             cout << "Command not recognized..." << endl;
         }
@@ -185,7 +174,7 @@ void DbConsole::openDatabaseFile(string dbName) {
 
 void DbConsole::createTable(string tableName, string command) {
 
-    string tableCommand = "[" + tableName + ":";
+    string tableCommand = tableName + ":";
 
     string newCommand = command.substr(0, command.size()-1);
 
@@ -249,12 +238,11 @@ void DbConsole::createTable(string tableName, string command) {
 
     }
 
-    tableCommand += "];";
+    tableCommand += ";";
 
     if(DbName == "*")
         cout << "No database found." << endl;
     else{
-
         ifstream file (DbName, ios::out|ios::binary);
         ofstream dbFile( DbName, ios::binary | ios::in);
 
@@ -279,6 +267,7 @@ void DbConsole::createTable(string tableName, string command) {
         dbFile.seekp(516);
         dbFile << memblock;
         dbFile.close();
+        cout << "Table created" << endl;
 
     }
 
@@ -287,27 +276,6 @@ void DbConsole::createTable(string tableName, string command) {
 void DbConsole::disconnectFromDatabase() {
     DbName = "*";
     cout << "Connection closed." << endl;
-}
-
-void DbConsole::readFromDatabase() {
-
-    if(DbName == "*"){
-        cout << "No database found." << endl;
-    }else{
-        string line;
-        ifstream myDatabase(DbName);
-
-        if(myDatabase.is_open()){
-            while (getline(myDatabase,line )){
-                cout << line <<endl;
-            }
-
-            myDatabase.close();
-        }else{
-            cout << "Unable to access database" << endl;
-        }
-
-    }
 }
 
 void DbConsole::getBitmap() {
@@ -326,16 +294,87 @@ void DbConsole::getBitmap() {
         file.read(memblock, 512);
         file.close();
 
+        bitMapSize =  bitmapSize;
         for(int i = 0; i < bitmapSize; i++)
             memoryBlock[i] = memblock[i];
-
-        //cout<< bitmapSize << endl;
-        //cout<< memoryBlock << endl;
-
 
         delete[] memblock;
     }
     else cout << "Unable to open file" << endl;
 }
 
+void DbConsole::insertIntoTable(string tableName, vector<string> parameters) {
 
+    if(DbName == "*"){
+        cout << "You must be connected to a database" << endl;
+        return;
+    }
+
+    if(!tableExists(tableName)){
+        cout << "Table not found" << endl;
+        return;
+    }
+
+    getBitmap();
+
+    int cleanBitDiskAddress = 0;
+
+    for (int i = 0; i < bitMapSize; ++i) {
+        if(memoryBlock[i] == '0'){
+            cleanBitDiskAddress = i;
+            break;
+        }
+    }
+    cout <<  cleanBitDiskAddress << endl;
+
+
+
+
+
+}
+
+bool DbConsole::tableExists(string tableName) {
+
+    char * memblock;
+
+    ifstream file (DbName, ios::out|ios::binary);
+    if(file.is_open()){
+
+        uint32_t bitmapSize;
+
+        file.read(reinterpret_cast<char *>(&bitmapSize), sizeof(bitmapSize));
+
+        memblock = new char [512];
+        file.seekg(516, ios::beg);
+        file.read(memblock, 512);
+        file.close();
+
+        for(int i = 0; i < bitmapSize; i++)
+            memoryBlock[i] = memblock[i];
+
+        delete[] memblock;
+    }
+    else cout << "Unable to open file" << endl;
+
+    vector<string> tableNames;
+
+    splitCommand(memblock, ";", tableNames);
+
+    char delimiter(';');
+
+    string nuTableName;
+
+    for(vector<string>::const_iterator i = tableNames.begin(); i != tableNames.end(); ++i){
+        string const& token = *i;
+
+        std::string::size_type pos = token.find(':');
+        if (pos != std::string::npos)
+        {
+            nuTableName = token.substr(0, pos);
+            if (tableName == nuTableName)
+                return  true;
+        }
+    }
+
+    return false;
+}
