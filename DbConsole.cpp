@@ -73,8 +73,10 @@ void DbConsole::executeCli() {
         }else if(compareTokenStrings("disconnect", parameters)) {
             disconnectFromDatabase();
         }else if(compareTokenStrings("insert", parameters)){
-
-            insertIntoTable(parameters[2], parameters);
+            string newCommand = parameters[2];
+            vector<string> tableName;
+            splitCommand(newCommand, "(", tableName);
+            insertIntoTable(tableName[0], command);
         }else{
             cout << "Command not recognized..." << endl;
         }
@@ -303,7 +305,7 @@ void DbConsole::getBitmap() {
     else cout << "Unable to open file" << endl;
 }
 
-void DbConsole::insertIntoTable(string tableName, vector<string> parameters) {
+void DbConsole::insertIntoTable(string tableName, string parameters) {
 
     if(DbName == "*"){
         cout << "You must be connected to a database" << endl;
@@ -344,8 +346,18 @@ void DbConsole::insertIntoTable(string tableName, vector<string> parameters) {
     }
     else cout << "Unable to open file" << endl;
 
-    vector<string> tableColumns;
+    string rowHeader = tableName + ":";
 
+    vector<string> rowParams;
+
+    splitCommand(parameters, "(", rowParams);
+
+    if(rowParams[1].size() >= 2)
+        rowParams[1] = rowParams[1].substr(0, rowParams[1].size() -1);
+    else
+        return;
+
+    vector<string> tableColumns;
     splitCommand(tableHeader, "|" , tableColumns);
 
     for(vector<string>::const_iterator i = tableColumns.begin() +1; i != tableColumns.end(); ++i) {
@@ -354,14 +366,82 @@ void DbConsole::insertIntoTable(string tableName, vector<string> parameters) {
         vector<string> columnData;
         splitCommand(token, ",", columnData);
 
-        cout<< columnData[0] << endl;
-        cout<< columnData[1] << endl;
+        size_t found = columnData[1].find("char");
 
-        
+        //rowData += columnData[1] + ",";
 
-        cout<< "************" << endl;
+        if(found != string::npos){
+            vector<string> charParam;
+            splitCommand(columnData[1], ".", charParam);
+            int charSize = stoi(charParam[1]);
+            rowHeader += charParam[0] + "." + charParam[1] + ",";
 
+        }else{
+            rowHeader += columnData[1] + ",";
+        }
     }
+
+    rowHeader = rowHeader.substr(0, rowHeader.size() -1);
+   // cout << rowHeader << endl;
+   // cout << rowParams[1] << endl;
+
+    string dataRow  = tableName + ":";
+
+    vector<string> rowHead;
+    vector<string> rowData;
+
+    splitCommand(rowHeader, ",", rowHead);
+    splitCommand(rowParams[1], ",", rowData);
+
+    for(int i = 0; i < rowHead.size(); i++){
+        size_t found = rowHead[i].find("char");
+        if(found != string::npos){
+            char * fullCharRegister;
+            vector<string> data;
+            splitCommand(rowHead[i], ".", data);
+
+            int charSize = stoi(data[1]);
+
+            cout << charSize << endl;
+
+            fullCharRegister = new char[charSize];
+
+
+            int z = 0;
+            for(int j = 0; j < charSize; j++) {
+                if ((fullCharRegister[j] == NULL)){
+                    if(z < rowData[0].size()){
+                        cout<< rowData[0].at(z);
+                        z++;
+                    }
+                    cout << "*";
+                }
+
+//                if ((fullCharRegister[j] == NULL) && (fullCharRegister[j] == '\0')){
+//                    if(z < rowData[0].length()){
+//                        fullCharRegister[i] = rowData[z].at(z);
+//                        z++;
+//                    }
+//                }else{
+//                    fullCharRegister[i] = '*';
+//                }
+            }
+
+
+            cout<< "," <<endl;
+
+            dataRow += fullCharRegister;
+            dataRow += ",";
+        }
+        else{
+            cout<< rowData[i] + "," ;
+            dataRow += rowData[i] + ",";
+        }
+    }
+
+    dataRow = dataRow.substr(0, dataRow.size() -1);
+    cout<< dataRow<<endl;
+
 
 
     delete[] memblock;

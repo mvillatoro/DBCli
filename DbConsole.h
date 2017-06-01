@@ -33,7 +33,7 @@ public:
     void openDatabaseFile(string dbName);
     void createDatabase(string dbName, int dbSize);
     void createTable(string tableName, string command);
-    void insertIntoTable(string tableName, vector<string> parameters);
+    void insertIntoTable(string tableName, string parameters);
     void splitCommand(string commandString, const string& delim, vector<string>& tokens);
     bool compareTokenStrings(string command, vector<string> tokens);
     string tableExists(string tableName);
