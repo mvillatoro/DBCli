@@ -332,16 +332,16 @@ void DbConsole::insertIntoTable(string tableName, string parameters) {
 
     int writePointer = (cleanBitDiskAddress * 512) + 4;
 
-    char * memblock;
+    char * memblock2;
 
     ifstream file (DbName, ios::out|ios::binary);
     if(file.is_open()){
 
         uint32_t bitmapSize;
         file.read(reinterpret_cast<char *>(&bitmapSize), sizeof(bitmapSize));
-        memblock = new char [512];
+        memblock2 = new char [512];
         file.seekg(writePointer, ios::beg);
-        file.read(memblock, 512);
+        file.read(memblock2, 512);
         file.close();
     }
     else cout << "Unable to open file" << endl;
@@ -394,57 +394,87 @@ void DbConsole::insertIntoTable(string tableName, string parameters) {
     splitCommand(rowParams[1], ",", rowData);
 
     for(int i = 0; i < rowHead.size(); i++){
+//        cout<< rowHead[i];
+//        cout<< ": ";
+//        cout<< rowData[i]<<endl;
+
         size_t found = rowHead[i].find("char");
+
         if(found != string::npos){
-            char * fullCharRegister;
-            vector<string> data;
-            splitCommand(rowHead[i], ".", data);
+            string x;
+            x = rowHead[i].substr(rowHead[i].find(".") +1);
 
-            int charSize = stoi(data[1]);
+            int charSize = stoi(x);
 
-            cout << charSize << endl;
+            char *charData = new char[charSize];
 
-            fullCharRegister = new char[charSize];
-
-
-            int z = 0;
-            for(int j = 0; j < charSize; j++) {
-                if ((fullCharRegister[j] == NULL)){
-                    if(z < rowData[0].size()){
-                        cout<< rowData[0].at(z);
-                        z++;
-                    }
-                    cout << "*";
+            for (int j = 0; j < charSize; j++) {
+                if(j < rowData[i].length()){
+                    charData[j] = rowData[i].at(j);
+                }else{
+                    charData[j] = '*';
                 }
 
-//                if ((fullCharRegister[j] == NULL) && (fullCharRegister[j] == '\0')){
-//                    if(z < rowData[0].length()){
-//                        fullCharRegister[i] = rowData[z].at(z);
-//                        z++;
-//                    }
-//                }else{
-//                    fullCharRegister[i] = '*';
-//                }
             }
 
-
-            cout<< "," <<endl;
-
-            dataRow += fullCharRegister;
+            for(int k = 0; k < charSize; k++){
+                dataRow += charData[k];
+            }
+            dataRow += ",";
+        }else{
+            dataRow += rowData[i];
             dataRow += ",";
         }
-        else{
-            cout<< rowData[i] + "," ;
-            dataRow += rowData[i] + ",";
+    }
+    dataRow = dataRow.substr(0, dataRow.size() -1);
+
+    dataRow += "|";
+
+    int x = 0;
+    for(int i = 0; i < bitMapSize; i++){
+        if((memblock2[i] == NULL) && (memblock2[i] == '\0')){
+            if(i < dataRow.length()){
+                memblock2[i] = dataRow[x];
+                x++;
+            }
         }
     }
 
-    dataRow = dataRow.substr(0, dataRow.size() -1);
-    cout<< dataRow<<endl;
+//    for(int t = 0; t < 512; t++)
+//        cout <<  memblock[t];
 
 
+    if(DbName == "*")
+        cout << "No database found." << endl;
+    else{
+        ifstream file (DbName, ios::out|ios::binary);
+        ofstream dbFile( DbName, ios::binary | ios::in);
 
-    delete[] memblock;
+        getBitmap();
+
+        char * memblock;
+        memblock = new char [512];
+
+        file.seekg(writePointer, ios::beg);
+        file.read(memblock, 512);
+
+        int z = 0;
+        for(int i = 0; i < 512; i++) {
+            if ((memblock[i] == NULL) && (memblock[i] == '\0')){
+                if(z < dataRow.length()){
+                    memblock[i] = dataRow[z];
+                    z++;
+                }
+            }
+        }
+
+        dbFile.seekp(writePointer);
+        dbFile << memblock;
+        dbFile.close();
+        cout << "Value inserted" << endl;
+    }
+
+    delete[] memblock2;
 
 }
 
