@@ -28,34 +28,34 @@ void DbConsole::executeCli() {
     char command[100];
     bool executionState = true;
 
-    do{
-        cout<<"~$ ";
+    do {
+        cout << "~$ ";
         cin.getline(command, sizeof(command));
         vector<string> parameters;
         splitCommand(command, " ", parameters);
 
-        if(compareTokenStrings("exit", parameters)){
+        if (compareTokenStrings("exit", parameters)) {
             executionState = false;
-        }else if(compareTokenStrings("create", parameters)){
+        } else if (compareTokenStrings("create", parameters)) {
 
             int fileSize = 200;
 
-            if(compareTokenStrings("-z", parameters))
+            if (compareTokenStrings("-z", parameters))
                 fileSize = stoi(parameters[4]);
 
-            if(compareTokenStrings("database", parameters))
+            if (compareTokenStrings("database", parameters))
                 createDatabase(parameters[2], fileSize);
 
-            if(compareTokenStrings("table", parameters)){
+            if (compareTokenStrings("table", parameters)) {
                 string newCommand = parameters[2];
                 vector<string> tableName;
                 splitCommand(newCommand, "(", tableName);
                 createTable(tableName[0], command);
             }
 
-        }else if(compareTokenStrings("connect", parameters)){
+        } else if (compareTokenStrings("connect", parameters)) {
             openDatabaseFile(parameters[2]);
-        }else if(compareTokenStrings("drop", parameters)) {
+        } else if (compareTokenStrings("drop", parameters)) {
             if (compareTokenStrings("database", parameters)) {
                 string dbName = parameters[2] + ".dbc";
 
@@ -63,22 +63,45 @@ void DbConsole::executeCli() {
                     perror("Database does not exists.");
                 else
                     puts("Database successfully dropped");
-            }else if(compareTokenStrings("table", parameters)){
+            } else if (compareTokenStrings("table", parameters)) {
                 dropTable(parameters[2]);
             }
-        }else if(compareTokenStrings("help", parameters)) {
+        } else if (compareTokenStrings("help", parameters)) {
             cout << "create database [database name]" << endl;
             cout << "drop database [database name]" << endl;
             cout << "connect to [database name]" << endl;
             cout << "insert into [tableName] ([column1], [column2]...): values([value1], [value2]...)" << endl;
             cout << "disconnect" << endl;
-        }else if(compareTokenStrings("disconnect", parameters)) {
+        } else if (compareTokenStrings("disconnect", parameters)) {
             disconnectFromDatabase();
-        }else if(compareTokenStrings("insert", parameters)){
+        } else if (compareTokenStrings("insert", parameters)) {
             string newCommand = parameters[2];
             vector<string> tableName;
             splitCommand(newCommand, "(", tableName);
             insertIntoTable(tableName[0], command);
+        }
+        else if(compareTokenStrings("update", parameters)){
+
+            string tableName = parameters[2];
+
+            vector<string> tableNameX;
+            splitCommand(tableName, "(", tableNameX);
+
+
+            vector<string> aux1;
+            splitCommand(command, "(", aux1);
+
+            vector<string> updateData;
+            splitCommand(aux1[1], ")", updateData);
+
+            if(compareTokenStrings("where", parameters)){
+                string whereData = updateData[1].substr(updateData[1].find(" ") +1 );
+                whereData =whereData.substr(whereData.find(" ") +1 );
+
+                updateTable(tableNameX[0] , updateData[0], whereData);
+            }else
+                updateTable(tableNameX[0] , updateData[0], "-1");
+
         }else{
             cout << "Command not recognized..." << endl;
         }
@@ -583,12 +606,12 @@ void DbConsole::dropTable(string tableName) {
 
         if(deletedDataAux == tableName){
 
-            deletedTable = new char[x.length()];
+            deletedData = new char[x.length()];
             for (int l = 0; l < x.length(); ++l)
-                deletedTable[l] = 'X';
+                deletedData[l] = 'X';
 
             cout<< dataValues[it2] <<endl;
-            dataValues[it2] = deletedTable;
+            dataValues[it2] = deletedData;
         }
 
         it2++;
@@ -598,13 +621,9 @@ void DbConsole::dropTable(string tableName) {
     for (auto value: dataValues)
         joinedValuesData << value + ";";
 
-
     string message = "Table " + tableName + " dropped.";
 
-//    cout << joinedValuesData.str() <<endl;
     writeReplaceBlock(1028, joinedValuesData.str(), "");
-
-    cout<< joinedValuesTable.str() <<endl;
     writeReplaceBlock(516, joinedValuesTable.str(), message);
 
 }
@@ -691,5 +710,85 @@ void DbConsole::writeReplaceBlock(int writePointer, string data, string message)
         dbFile.close();
         cout << message << endl;
     }
+}
+
+void DbConsole::updateTable(string tableName, string updatedData, string whereCondition) {
+    if(DbName == "*"){
+        cout << "You must be connected to a database" << endl;
+        return;
+    }
+
+    string tableN = tableExists(tableName);
+
+    if(tableN == "-1"){
+        cout << "Table not found" << endl;
+        return;
+    }
+
+//    cout<< tableName <<endl;
+//    cout<< updatedData <<endl;
+//    cout<< whereCondition <<endl;
+
+    string columnCondition = "";
+    string columnValue = "";
+
+
+    if(whereCondition != "-1"){
+        vector<string> cc;
+        splitCommand(whereCondition, "=", cc);
+
+        //m_VirtualHostName = m_VirtualHostName.substr(1, m_VirtualHostName.size() - 2);
+
+        cout << columnCondition << endl;
+        cout << columnValue << endl;
+        
+        if(cc[0].at(cc[0].length()-1) == ' ')
+            columnCondition = cc[0].substr(0, cc[0].size()-1);
+
+        if(cc[1].at(0) == ' ')
+            columnValue = cc[1].substr(1, cc[0].size());
+
+        cout << columnCondition;
+        cout << "*" << endl;
+
+        cout << columnValue;
+        cout << "*" << endl;
+    }
+
+
+    int columnPosition = 0;
+    char * tablesBlock = readBlock(516);
+    vector<string> tableHeader;
+    splitCommand(tablesBlock, ";", tableHeader);
+
+    for(vector<string>::const_iterator i = tableHeader.begin(); i != tableHeader.end(); ++i) {
+
+        string const& token = *i;
+
+        string::size_type pos = token.find(':');
+        if (pos != string::npos)
+        {
+            string tableNameAux = token.substr(0, pos);
+
+            if (tableNameAux == tableName){
+                cout<< tableNameAux <<endl;
+
+
+
+
+            }
+        }
+
+    }
+
+
+        char * dataBlock = readBlock(1028);
+    vector<string> tables;
+    splitCommand(dataBlock, ";", tables);
+
+
+
+
+
 }
 

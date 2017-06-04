@@ -38,6 +38,7 @@ public:
     string tableExists(string tableName);
 
     void dropTable(string tableName);
+    void updateTable(string tableName, string updatedData,  string whereCondition);
 
     char * readBlock(int readPointer);
     void writeAddBlock(int writePointer, string data);
