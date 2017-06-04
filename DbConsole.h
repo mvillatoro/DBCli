@@ -21,7 +21,6 @@ using namespace std;
 class DbConsole {
 public:
 
-    //ofstream dbFile;
     string DbName = "*";
     char * memoryBlock = new char[512];
     int bitMapSize;
@@ -38,6 +37,11 @@ public:
     bool compareTokenStrings(string command, vector<string> tokens);
     string tableExists(string tableName);
 
+    void dropTable(string tableName);
+
+    char * readBlock(int readPointer);
+    void writeAddBlock(int writePointer, string data);
+    void writeReplaceBlock(int writePointer, string data, string message);
 
 };
 

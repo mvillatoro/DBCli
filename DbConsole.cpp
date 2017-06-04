@@ -63,6 +63,8 @@ void DbConsole::executeCli() {
                     perror("Database does not exists.");
                 else
                     puts("Database successfully dropped");
+            }else if(compareTokenStrings("table", parameters)){
+                dropTable(parameters[2]);
             }
         }else if(compareTokenStrings("help", parameters)) {
             cout << "create database [database name]" << endl;
@@ -368,12 +370,9 @@ void DbConsole::insertIntoTable(string tableName, string parameters) {
 
         size_t found = columnData[1].find("char");
 
-        //rowData += columnData[1] + ",";
-
         if(found != string::npos){
             vector<string> charParam;
             splitCommand(columnData[1], ".", charParam);
-            int charSize = stoi(charParam[1]);
             rowHeader += charParam[0] + "." + charParam[1] + ",";
 
         }else{
@@ -382,8 +381,6 @@ void DbConsole::insertIntoTable(string tableName, string parameters) {
     }
 
     rowHeader = rowHeader.substr(0, rowHeader.size() -1);
-   // cout << rowHeader << endl;
-   // cout << rowParams[1] << endl;
 
     string dataRow  = tableName + ":";
 
@@ -394,9 +391,6 @@ void DbConsole::insertIntoTable(string tableName, string parameters) {
     splitCommand(rowParams[1], ",", rowData);
 
     for(int i = 0; i < rowHead.size(); i++){
-//        cout<< rowHead[i];
-//        cout<< ": ";
-//        cout<< rowData[i]<<endl;
 
         size_t found = rowHead[i].find("char");
 
@@ -439,10 +433,6 @@ void DbConsole::insertIntoTable(string tableName, string parameters) {
             }
         }
     }
-
-//    for(int t = 0; t < 512; t++)
-//        cout <<  memblock[t];
-
 
     if(DbName == "*")
         cout << "No database found." << endl;
@@ -523,3 +513,183 @@ string DbConsole::tableExists(string tableName) {
 
     return "-1";
 }
+
+void DbConsole::dropTable(string tableName) {
+
+    if(DbName == "*"){
+        cout << "You must be connected to a database" << endl;
+        return;
+    }
+
+    string tableHeader = tableExists(tableName);
+    if(tableHeader == "-1"){
+        cout << "Table not found" << endl;
+        return;
+    }
+
+    char * tableBlock = readBlock(516);
+
+    vector<string> tablesVector;
+    splitCommand(tableBlock, ";", tablesVector);
+
+    char * deletedTable;
+
+    int it = 0;
+    for(vector<string>::const_iterator i = tablesVector.begin(); i != tablesVector.end(); ++i){
+
+        string x = *i;
+
+        string deletedTableAux = *i;
+        string const& token = *i;
+        std::string::size_type pos = token.find(':');
+
+        if (pos != std::string::npos)
+            deletedTableAux = token.substr(0, pos);
+
+        if(deletedTableAux == tableName){
+
+            deletedTable = new char[x.length()];
+            for (int j = 0; j < x.length(); ++j)
+                deletedTable[j] = 'X';
+
+            tablesVector[it] = deletedTable;
+        }
+
+        it++;
+    }
+
+    stringstream joinedValuesTable;
+    for (auto value: tablesVector)
+        joinedValuesTable << value + ";";
+
+    char * dataBlock = readBlock(1028);
+
+    vector<string> dataValues;
+    splitCommand(dataBlock, "|", dataValues);
+
+    char * deletedData;
+
+    int it2 = 0;
+
+    for(vector<string>::const_iterator k = dataValues.begin(); k != dataValues.end(); ++k){
+        string x = *k;
+
+        string deletedDataAux = *k;
+        string const& token = *k;
+        string::size_type pos = token.find(':');
+
+        if (pos != string::npos)
+            deletedDataAux = token.substr(0, pos);
+
+        if(deletedDataAux == tableName){
+
+            deletedTable = new char[x.length()];
+            for (int l = 0; l < x.length(); ++l)
+                deletedTable[l] = 'X';
+
+            cout<< dataValues[it2] <<endl;
+            dataValues[it2] = deletedTable;
+        }
+
+        it2++;
+    }
+
+    stringstream joinedValuesData;
+    for (auto value: dataValues)
+        joinedValuesData << value + ";";
+
+
+    string message = "Table " + tableName + " dropped.";
+
+//    cout << joinedValuesData.str() <<endl;
+    writeReplaceBlock(1028, joinedValuesData.str(), "");
+
+    cout<< joinedValuesTable.str() <<endl;
+    writeReplaceBlock(516, joinedValuesTable.str(), message);
+
+}
+
+char * DbConsole::readBlock(int readPointer) {
+
+    char * memblock = new char [512];
+    ifstream file (DbName, ios::out|ios::binary);
+    if(file.is_open()){
+
+        uint32_t bitmapSize;
+
+        file.read(reinterpret_cast<char *>(&bitmapSize), sizeof(bitmapSize));
+
+        file.seekg(readPointer, ios::beg);
+        file.read(memblock, 512);
+        file.close();
+
+    }
+    else cout << "Unable to open file" << endl;
+
+    return memblock;
+}
+
+void DbConsole::writeAddBlock(int writePointer, string data) {
+
+    if(DbName == "*")
+        cout << "No database found." << endl;
+    else{
+        ifstream file (DbName, ios::out|ios::binary);
+        ofstream dbFile( DbName, ios::binary | ios::in);
+
+        getBitmap();
+
+        char * memblock;
+        memblock = new char [512];
+
+        file.seekg(writePointer, ios::beg);
+        file.read(memblock, 512);
+
+        int z = 0;
+        for(int i = 0; i < 512; i++) {
+            if ((memblock[i] == NULL) && (memblock[i] == '\0')){
+                if(z < data.length()){
+                    memblock[i] = data[z];
+                    z++;
+                }
+            }
+        }
+
+        dbFile.seekp(writePointer);
+        dbFile << memblock;
+        dbFile.close();
+        cout << "Value inserted" << endl;
+    }
+
+}
+
+void DbConsole::writeReplaceBlock(int writePointer, string data, string message) {
+    if(DbName == "*")
+        cout << "No database found." << endl;
+    else{
+        ifstream file (DbName, ios::out|ios::binary);
+        ofstream dbFile( DbName, ios::binary | ios::in);
+
+        getBitmap();
+
+        char * memblock;
+        memblock = new char [512];
+
+        file.seekg(writePointer, ios::beg);
+        file.read(memblock, 512);
+
+        int z = 0;
+        for(int i = 0; i < 512; i++) {
+            if(z < data.length()){
+                memblock[i] = data[z];
+                z++;
+            }
+        }
+
+        dbFile.seekp(writePointer);
+        dbFile << memblock;
+        dbFile.close();
+        cout << message << endl;
+    }
+}
+
