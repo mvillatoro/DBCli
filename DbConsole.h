@@ -48,6 +48,8 @@ public:
 
     int getColumnPointer(string tableHeader, string column);
 
+    void selectData(string tableName, string projection, string whereCondition);
+
 };
 
 

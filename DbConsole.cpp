@@ -72,6 +72,9 @@ void DbConsole::executeCli() {
             cout << "connect to [database name]" << endl;
             cout << "insert into [tableName] ([column1], [column2]...): values([value1], [value2]...)" << endl;
             cout << "disconnect" << endl;
+            cout << "select ([column1],[column2]) from [table] where [column]=[value]" <<endl;
+            cout << "update table [tablename] ([value1],[value2]) where [column]=[value]" << endl;
+            cout << "delete from [tablename] where ,[column]=[value]" <<endl;
         } else if (compareTokenStrings("disconnect", parameters)) {
             disconnectFromDatabase();
         } else if (compareTokenStrings("insert", parameters)) {
@@ -106,10 +109,18 @@ void DbConsole::executeCli() {
 
             string tableName = parameters[2];
 
+            cout << tableName <<endl;
+
             vector<string> whereSplit;
             splitCommand(command, ",", whereSplit);
 
             deleteFromTable(tableName, whereSplit[1]);
+
+        }else if(compareTokenStrings("select", parameters)){
+            string tableName = parameters[3];
+            string columnData = parameters[1].substr(1, parameters[1].length()-2);
+            string whereData = parameters[5];
+            selectData(tableName, columnData,whereData);
 
         }else{
             cout << "Command not recognized..." << endl;
@@ -455,7 +466,7 @@ void DbConsole::insertIntoTable(string tableName, string parameters) {
     }
     dataRow = dataRow.substr(0, dataRow.size() -1);
 
-    dataRow += "|";
+    dataRow += ";";
 
     int x = 0;
     for(int i = 0; i < bitMapSize; i++){
@@ -992,10 +1003,6 @@ void DbConsole::deleteFromTable(string tableName, string whereCondition) {
                 vector<string> tableColumnData;
                 splitCommand(tableData[1], ",", tableColumnData);
 
-
-                cout<<  tableColumnData[columnPointer]<<endl;
-                cout<<columnValue <<endl;
-
                 if(tableColumnData[columnPointer] == columnValue){
 
                     deletedData = new char[x.length()];
@@ -1007,7 +1014,6 @@ void DbConsole::deleteFromTable(string tableName, string whereCondition) {
             }
         }
 
-//        cout<<dataValues[it2]<<endl;
         it2++;
     }
 
@@ -1016,11 +1022,89 @@ void DbConsole::deleteFromTable(string tableName, string whereCondition) {
     for (auto value: dataValues)
         joinedValuesData << value + ";";
 
-    cout <<joinedValuesData.str()<<endl;
-
     writeReplaceBlock(1028, joinedValuesData.str(), "Deleted register.");
 
 }
 
+void DbConsole::selectData(string tableName, string projection, string whereCondition) {
+
+    if(DbName == "*"){
+        cout << "You must be connected to a database" << endl;
+        return;
+    }
+
+    string tableN = tableExists(tableName);
+
+    if(tableN == "-1"){
+        cout << "Table not found" << endl;
+        return;
+    }
+
+    string columnCondition = "";
+    string columnValue = "";
+    int columnPointer = -1;
+
+    if(whereCondition != "-1"){
+        vector<string> cc;
+        splitCommand(whereCondition, "=", cc);
 
 
+        if(cc[0].at(cc[0].length()-1) == ' ')
+            columnCondition = cc[0].substr(0, cc[0].size()-1);
+        else
+            columnCondition = cc[0];
+
+        if(cc[1].at(0) == ' ')
+            columnValue = cc[1].substr(1, cc[0].size());
+        else
+            columnValue = cc[1];
+
+        char * tablesBlock = readBlock(516);
+        vector<string> tableHeader;
+        splitCommand(tablesBlock, ";", tableHeader);
+
+        for(vector<string>::const_iterator i = tableHeader.begin(); i != tableHeader.end(); ++i) {
+
+            string const& token = *i;
+
+            string tbn = token.substr(0, token.find(":"));
+
+            if(tbn == tableName){
+                columnPointer =  getColumnPointer(token, columnCondition);
+                if(columnPointer == -1){
+                    cout << "Column does not exist." << endl;
+                    return;
+                }
+            }
+        }
+    }
+
+    char * dataBlock = readBlock(1028);
+    vector<string> tables;
+    splitCommand(dataBlock, ";", tables);
+
+    int tableIt = 0;
+
+    for(vector<string>::const_iterator i = tables.begin(); i != tables.end(); ++i) {
+
+        string tableRawData = *i;
+        vector<string> tableData;
+        splitCommand(tableRawData, ":", tableData);
+
+//        cout << tableData[0]<< endl;
+//        cout <<tableName << endl;
+
+        if(tableData[0] == tableName){
+            vector<string> tableColumnData;
+            splitCommand(tableData[1], ",", tableColumnData);
+
+//            cout <<tableColumnData[columnPointer] << endl;
+//            cout << columnValue<< endl;
+
+            if(tableColumnData[columnPointer] == columnValue){
+                cout<< tableRawData <<endl;
+            }
+        }
+        tableIt++;
+    }
+}
