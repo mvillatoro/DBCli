@@ -102,6 +102,15 @@ void DbConsole::executeCli() {
             }else
                 updateTable(tableNameX[0] , updateData[0], "-1");
 
+        }else if(compareTokenStrings("delete", parameters)){
+
+            string tableName = parameters[2];
+
+            vector<string> whereSplit;
+            splitCommand(command, ",", whereSplit);
+
+            deleteFromTable(tableName, whereSplit[1]);
+
         }else{
             cout << "Command not recognized..." << endl;
         }
@@ -898,6 +907,118 @@ int DbConsole::getColumnPointer(string tableHeader, string column) {
     }
 
     return  -1;
+
+}
+
+void DbConsole::deleteFromTable(string tableName, string whereCondition) {
+
+
+    if(DbName == "*"){
+        cout << "You must be connected to a database" << endl;
+        return;
+    }
+
+    string tableHeader = tableExists(tableName);
+    if(tableHeader == "-1"){
+        cout << "Table not found" << endl;
+        return;
+    }
+
+    string columnCondition = "";
+    string columnValue = "";
+    int columnPointer = -1;
+
+    if(whereCondition != "-1"){
+        vector<string> cc;
+        splitCommand(whereCondition, "=", cc);
+
+
+        if(cc[0].at(cc[0].length()-1) == ' ')
+            columnCondition = cc[0].substr(0, cc[0].size()-1);
+        else
+            columnCondition = cc[0];
+
+        if(cc[1].at(0) == ' ')
+            columnValue = cc[1].substr(1, cc[0].size());
+        else
+            columnValue = cc[1];
+
+        char * tablesBlock = readBlock(516);
+        vector<string> tableHeader;
+        splitCommand(tablesBlock, ";", tableHeader);
+
+        for(vector<string>::const_iterator i = tableHeader.begin(); i != tableHeader.end(); ++i) {
+
+            string const& token = *i;
+
+            string tbn = token.substr(0, token.find(":"));
+
+            if(tbn == tableName){
+                columnPointer =  getColumnPointer(token, columnCondition);
+                if(columnPointer == -1){
+                    cout << "Column does not exist." << endl;
+                    return;
+                }
+            }
+        }
+    }
+
+
+
+    char * dataBlock = readBlock(1028);
+
+    vector<string> dataValues;
+    splitCommand(dataBlock, "|", dataValues);
+
+    char * deletedData;
+
+    int it2 = 0;
+
+    for(vector<string>::const_iterator k = dataValues.begin(); k != dataValues.end(); ++k){
+        string x = *k;
+
+        string deletedDataAux = *k;
+        string const& token = *k;
+        string::size_type pos = token.find(':');
+
+        if (pos != string::npos)
+            deletedDataAux = token.substr(0, pos);
+
+        vector<string> tableData;
+        splitCommand(dataValues[it2], ":", tableData);
+
+        if(deletedDataAux == tableName){
+            if(tableData[0] == tableName){
+                vector<string> tableColumnData;
+                splitCommand(tableData[1], ",", tableColumnData);
+
+
+                cout<<  tableColumnData[columnPointer]<<endl;
+                cout<<columnValue <<endl;
+
+                if(tableColumnData[columnPointer] == columnValue){
+
+                    deletedData = new char[x.length()];
+                    for (int l = 0; l < x.length(); ++l)
+                        deletedData[l] = 'X';
+
+                    dataValues[it2] = deletedData;
+                }
+            }
+        }
+
+//        cout<<dataValues[it2]<<endl;
+        it2++;
+    }
+
+
+    stringstream joinedValuesData;
+    for (auto value: dataValues)
+        joinedValuesData << value + ";";
+
+    cout <<joinedValuesData.str()<<endl;
+
+    writeReplaceBlock(1028, joinedValuesData.str(), "Deleted register.");
 
 }
 

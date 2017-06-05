@@ -44,7 +44,7 @@ public:
     void writeAddBlock(int writePointer, string data);
     void writeReplaceBlock(int writePointer, string data, string message);
 
-    void deleteFromTable();
+    void deleteFromTable(string tableName, string whereCondition);
 
     int getColumnPointer(string tableHeader, string column);
 
