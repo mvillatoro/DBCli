@@ -769,6 +769,8 @@ void DbConsole::updateTable(string tableName, string updatedData, string whereCo
     vector<string> tables;
     splitCommand(dataBlock, "|", tables);
 
+    int tableIt = 0;
+
     for(vector<string>::const_iterator i = tables.begin(); i != tables.end(); ++i) {
 
         string tableRawData = *i;
@@ -780,11 +782,101 @@ void DbConsole::updateTable(string tableName, string updatedData, string whereCo
             vector<string> tableColumnData;
             splitCommand(tableData[1], ",", tableColumnData);
 
-            if(tableColumnData[columnPointer] == columnValue)
-                cout<< updatedData <<endl;
+            if(tableColumnData[columnPointer] == columnValue){
 
+                vector<string> dataSplit;
+                splitCommand(updatedData, ",", dataSplit);
+
+                string mainTable = tableName +":";
+
+                for(vector<string>::const_iterator j = dataSplit.begin(); j != dataSplit.end(); ++j) {
+
+                    string y = *j;
+                    string updatedString = "";
+
+
+                    vector<string> paramSplit;
+                    splitCommand(y, "=", paramSplit);
+
+                    string id = paramSplit[0];
+                    string value = paramSplit[1];
+
+                    char * tablesBlock = readBlock(516);
+                    vector<string> tableHeader;
+                    splitCommand(tablesBlock, ";", tableHeader);
+
+                    for(vector<string>::const_iterator k = tableHeader.begin(); k != tableHeader.end(); ++k) {
+
+                        string it = *k;
+
+                        vector<string> fml1;
+                        splitCommand(it,":", fml1);
+
+                        if(fml1[0] == tableName){
+                            vector<string> fml2;
+                            splitCommand(fml1[1],"|",fml2);
+
+                            for(vector<string>::const_iterator l = fml2.begin(); l != fml2.end(); ++l) {
+                                string it2 = *l;
+
+
+                                vector<string> fml3;
+                                splitCommand(it2,",",fml3);
+
+                                //cout<< fml3[0] <<endl;
+
+                                vector<string> fml4;
+                                splitCommand(fml3[1],".",fml4);
+
+
+                                if(fml4[0] == "char" && fml3[0] == id){
+                                    int charL = stoi(fml4[1]);
+
+                                    char * fml5 = new char[charL];
+                                    for(int h = 0; h < charL; h++){
+                                        if(h < value.length()){
+                                            fml5[h] = value.at(h);
+                                        }
+                                        else{
+                                            fml5[h] = '*';
+                                        }
+                                    }
+
+                                    for(int h = 0; h < charL; h++)
+                                        mainTable += fml5[h];
+
+
+                                }else if(fml3[0] == id)
+                                    mainTable+=value + ",";
+
+                            }
+                        }
+                    }
+                }
+
+                mainTable = mainTable.substr(0, mainTable.length()-1);
+//                cout << mainTable <<endl;
+
+                tables[tableIt] = mainTable;
+                cout<< *i <<endl;
+            }else{
+
+
+
+            }
         }
+
+        tableIt++;
     }
+
+    stringstream joinedValuesTable;
+    for (auto value: tables)
+        joinedValuesTable << value + ";";
+
+
+
+    writeReplaceBlock(1028, joinedValuesTable.str(), "Table updated.");
+
 }
 
 int DbConsole::getColumnPointer(string tableHeader, string column) {
@@ -808,4 +900,6 @@ int DbConsole::getColumnPointer(string tableHeader, string column) {
     return  -1;
 
 }
+
+
 
