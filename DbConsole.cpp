@@ -254,13 +254,14 @@ void DbConsole::createTable(string tableName, string command) {
             tableCommand += "|" + tableColumns[0] + "," + tableColumns[1];
         }
 
+
+
         if(compareTokenStrings("int", tableColumns))
             tableCommand += "|" + tableColumns[0] + "," + "int";
         else if(compareTokenStrings("double", tableColumns))
             tableCommand += "|" + tableColumns[0] + "," + "double";
         else if(compareTokenStrings("char", tableColumns)){
             tableCommand += "|" + tableColumns[0] + "," + tableColumns[1];
-
         }
 
     }
@@ -415,9 +416,9 @@ void DbConsole::insertIntoTable(string tableName, string parameters) {
 
     for(int i = 0; i < rowHead.size(); i++){
 
-        size_t found = rowHead[i].find("char");
+        size_t foundChar = rowHead[i].find("char");
 
-        if(found != string::npos){
+        if(foundChar != string::npos){
             string x;
             x = rowHead[i].substr(rowHead[i].find(".") +1);
 
@@ -725,70 +726,86 @@ void DbConsole::updateTable(string tableName, string updatedData, string whereCo
         return;
     }
 
-//    cout<< tableName <<endl;
-//    cout<< updatedData <<endl;
-//    cout<< whereCondition <<endl;
-
     string columnCondition = "";
     string columnValue = "";
-
+    int columnPointer = -1;
 
     if(whereCondition != "-1"){
         vector<string> cc;
         splitCommand(whereCondition, "=", cc);
 
-        //m_VirtualHostName = m_VirtualHostName.substr(1, m_VirtualHostName.size() - 2);
-
-        cout << columnCondition << endl;
-        cout << columnValue << endl;
         
         if(cc[0].at(cc[0].length()-1) == ' ')
             columnCondition = cc[0].substr(0, cc[0].size()-1);
+        else
+            columnCondition = cc[0];
 
         if(cc[1].at(0) == ' ')
             columnValue = cc[1].substr(1, cc[0].size());
+        else
+            columnValue = cc[1];
 
-        cout << columnCondition;
-        cout << "*" << endl;
+        char * tablesBlock = readBlock(516);
+        vector<string> tableHeader;
+        splitCommand(tablesBlock, ";", tableHeader);
 
-        cout << columnValue;
-        cout << "*" << endl;
-    }
+        for(vector<string>::const_iterator i = tableHeader.begin(); i != tableHeader.end(); ++i) {
 
+            string const& token = *i;
 
-    int columnPosition = 0;
-    char * tablesBlock = readBlock(516);
-    vector<string> tableHeader;
-    splitCommand(tablesBlock, ";", tableHeader);
+            string tbn = token.substr(0, token.find(":"));
 
-    for(vector<string>::const_iterator i = tableHeader.begin(); i != tableHeader.end(); ++i) {
-
-        string const& token = *i;
-
-        string::size_type pos = token.find(':');
-        if (pos != string::npos)
-        {
-            string tableNameAux = token.substr(0, pos);
-
-            if (tableNameAux == tableName){
-                cout<< tableNameAux <<endl;
-
-
-
-
+            if(tbn == tableName){
+                columnPointer =  getColumnPointer(token, columnCondition);
+                if(columnPointer == -1){
+                    cout << "Column does not exist." << endl;
+                    return;
+                }
             }
         }
-
     }
 
-
-        char * dataBlock = readBlock(1028);
+    char * dataBlock = readBlock(1028);
     vector<string> tables;
-    splitCommand(dataBlock, ";", tables);
+    splitCommand(dataBlock, "|", tables);
 
+    for(vector<string>::const_iterator i = tables.begin(); i != tables.end(); ++i) {
 
+        string tableRawData = *i;
 
+        vector<string> tableData;
+        splitCommand(tableRawData, ":", tableData);
 
+        if(tableData[0] == tableName){
+            vector<string> tableColumnData;
+            splitCommand(tableData[1], ",", tableColumnData);
+
+            if(tableColumnData[columnPointer] == columnValue)
+                cout<< updatedData <<endl;
+
+        }
+    }
+}
+
+int DbConsole::getColumnPointer(string tableHeader, string column) {
+
+    vector<string> splittedHeader;
+    splitCommand(tableHeader, "|", splittedHeader);
+
+    int pointer = 0;
+
+    for(vector<string>::const_iterator i = splittedHeader.begin() +1 ; i != splittedHeader.end(); ++i) {
+
+        vector<string> x;
+        splitCommand(*i, ",", x);
+
+        if(x[0] == column)
+            return pointer;
+
+        pointer++;
+    }
+
+    return  -1;
 
 }
 
