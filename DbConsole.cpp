@@ -1063,14 +1063,49 @@ void DbConsole::selectData(string tableName, string projection, string whereCond
         vector<string> tableHeader;
         splitCommand(tablesBlock, ";", tableHeader);
 
+
+
+
         for(vector<string>::const_iterator i = tableHeader.begin(); i != tableHeader.end(); ++i) {
 
             string const& token = *i;
 
-            string tbn = token.substr(0, token.find(":"));
+            vector<string> fml10;
+            splitCommand(token, ":", fml10);
+
+            string tbn = fml10[0]; //token.substr(0, token.find(":"));
 
             if(tbn == tableName){
                 columnPointer =  getColumnPointer(token, columnCondition);
+
+                vector<string> fml11;
+                splitCommand(fml10[1], ";", fml11);
+
+                for(vector<string>::const_iterator j = fml11.begin(); j != fml11.end(); ++j) {
+                    string d = *j;
+
+                    d = d.substr(1, d.length());
+
+                    vector<string> s;
+                    splitCommand(d, "|",  s);
+
+                    for(vector<string>::const_iterator k = s.begin(); k != s.end(); ++k) {
+
+                        string s = *k;
+
+                        vector<string> r;
+                        splitCommand(s ,",",r);
+
+                        cout<< r[0];
+                        cout<<"  | " ;
+
+                    }
+
+
+                }
+
+                cout<< "" <<endl;
+
                 if(columnPointer == -1){
                     cout << "Column does not exist." << endl;
                     return;
@@ -1091,18 +1126,28 @@ void DbConsole::selectData(string tableName, string projection, string whereCond
         vector<string> tableData;
         splitCommand(tableRawData, ":", tableData);
 
-//        cout << tableData[0]<< endl;
-//        cout <<tableName << endl;
-
         if(tableData[0] == tableName){
             vector<string> tableColumnData;
             splitCommand(tableData[1], ",", tableColumnData);
 
-//            cout <<tableColumnData[columnPointer] << endl;
-//            cout << columnValue<< endl;
-
             if(tableColumnData[columnPointer] == columnValue){
-                cout<< tableRawData <<endl;
+                vector<string> t;
+                splitCommand(tableData[1], ",", t);
+
+                vector<string> w;
+                splitCommand(tableData[1], ",", w);
+
+                for(vector<string>::const_iterator n = w.begin(); n != w.end(); ++n) {
+                    string z = *n;
+                    z = z.substr(0, z.find("*"));
+
+                    cout<< z;
+                    cout<< "   |  " ;
+
+                }
+
+                cout<< "" << endl;
+
             }
         }
         tableIt++;

@@ -12,9 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47346f6d-1d14-4874-9243-a33dc639c501" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DbConsole.cpp" afterPath="$PROJECT_DIR$/DbConsole.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DbConsole.h" afterPath="$PROJECT_DIR$/DbConsole.h" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,11 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DbConsole.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DbConsole.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DbConsole.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="1110" column="0" lean-forward="true" selection-start-line="1110" selection-start-column="0" selection-end-line="1110" selection-end-column="0" />
+            <state relative-caret-position="407">
+              <caret line="1144" column="30" lean-forward="false" selection-start-line="1144" selection-start-column="30" selection-end-line="1144" selection-end-column="30" />
               <folding>
                 <element signature="e#63#107#0" expanded="false" />
                 <element signature="e#109#605#0" expanded="false" />
@@ -58,6 +56,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="20">
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="DbConsole.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DbConsole.h">
           <provider selected="true" editor-type-id="text-editor">
@@ -75,9 +83,9 @@
       <find>conne</find>
       <find>conn</find>
       <find>:</find>
-      <find>find</find>
       <find>&quot;int</find>
       <find>length()) ==</find>
+      <find>find</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -366,12 +374,12 @@
       <workItem from="1496645314566" duration="7109000" />
       <workItem from="1496661547708" duration="7779000" />
       <workItem from="1496684367588" duration="5423000" />
-      <workItem from="1496696183753" duration="4361000" />
+      <workItem from="1496696183753" duration="9216000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107224000" />
+    <option name="totallyTimeSpent" value="112079000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -383,7 +391,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-11" width="1853" height="939" extended-state="6" />
+    <frame x="64" y="-11" width="1853" height="939" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.123545706" sideWeight="0.49455675" order="0" side_tool="false" content_ui="combo" />
@@ -392,7 +400,7 @@
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881" sideWeight="0.5041459" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36397517" sideWeight="0.49585405" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36397517" sideWeight="0.49585405" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.112216696" sideWeight="0.5054432" order="2" side_tool="false" content_ui="tabs" />
@@ -786,13 +794,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DbConsole.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -1007,8 +1008,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DbConsole.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="1110" column="0" lean-forward="true" selection-start-line="1110" selection-start-column="0" selection-end-line="1110" selection-end-column="0" />
+        <state relative-caret-position="407">
+          <caret line="1144" column="30" lean-forward="false" selection-start-line="1144" selection-start-column="30" selection-end-line="1144" selection-end-column="30" />
           <folding>
             <element signature="e#63#107#0" expanded="false" />
             <element signature="e#109#605#0" expanded="false" />
@@ -1028,6 +1029,14 @@
             <element signature="e#24322#24769#0" expanded="false" />
             <element signature="e#24771#27523#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
